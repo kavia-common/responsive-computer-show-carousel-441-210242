@@ -1,4 +1,5 @@
 @import '../../styles/theme.css';
+/* Ensure base App styles are available if class names are referenced */
 
 .carousel {
   padding: 16px 0 28px;

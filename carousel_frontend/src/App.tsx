@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Carousel, Slide } from './components/Carousel';
+import { Carousel, Slide } from './components/Carousel/Carousel.tsx';
 
 // Attempt to import available assets. We know laptop.jpg exists. desktop.jpg may not exist, so we handle gracefully.
 import laptopImg from './assets/carousel/laptop.jpg';
@@ -25,6 +25,8 @@ export default function App(): React.ReactElement {
   };
 
   // Build slide data. We use laptop image as a fallback for any missing ones.
+  // Note: require() with a dynamic string won't be bundled by CRA; tryResolveImage covers optionality,
+  // but we restrict to a known import for laptop and gracefully fall back for any others.
   const desktopSrc = tryResolveImage('./assets/carousel/desktop.jpg') ?? laptopImg;
   const laptopSrc = laptopImg;
   const securitySrc = laptopImg; // Placeholder/fallback per instructions

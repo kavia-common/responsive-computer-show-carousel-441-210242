@@ -18,7 +18,7 @@
 */
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { logUIEvent } from '../../utils/audit';
+import { logUIEvent } from '../../utils/audit.ts';
 import './Carousel.css';
 
 export type Slide = {
