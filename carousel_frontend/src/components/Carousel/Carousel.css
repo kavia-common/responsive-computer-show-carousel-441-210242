@@ -1,0 +1,210 @@
+@import '../../styles/theme.css';
+
+.carousel {
+  padding: 16px 0 28px;
+  background: var(--gradient-soft), var(--color-background);
+  color: var(--color-text);
+}
+
+.carousel-header {
+  text-align: center;
+  margin: 0 16px 10px;
+}
+
+.carousel-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.carousel-subtitle {
+  margin: 6px 0 0 0;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+/* Viewport ensures partial neighbors on mobile using padding + negative margins */
+.carousel-viewport {
+  position: relative;
+  overflow: hidden;
+  /* padding shows neighbors' peek on mobile */
+  padding: 0 var(--peek-mobile);
+  height: var(--carousel-height-mobile);
+}
+
+/* Track holds slides horizontally */
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform var(--transition-base);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    transition: none;
+  }
+}
+
+/* Each slide takes full viewport width (minus peeks are outside track via viewport padding) */
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  padding: 0 6px; /* subtle gap */
+  box-sizing: border-box;
+}
+
+.carousel-slide .media-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background: var(--color-surface);
+}
+
+/* Gradient overlay for text */
+.overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, rgba(17,24,39,0) 0%, rgba(17,24,39,0.6) 100%);
+  color: #fff;
+}
+
+.overlay-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+.overlay-caption {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Fallback when image fails to load */
+.fallback-block {
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(37,99,235,0.25),
+    rgba(37,99,235,0.25) 14px,
+    rgba(245,158,11,0.25) 14px,
+    rgba(245,158,11,0.25) 28px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.fallback-label {
+  background: rgba(255,255,255,0.85);
+  color: var(--color-text);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Controls - arrows positioned outside edges on desktop; inside on mobile */
+.control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 36px;
+  width: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(17,24,39,0.1);
+  background: rgba(255,255,255,0.9);
+  color: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  z-index: 2;
+}
+
+.control:hover {
+  background: #fff;
+  box-shadow: var(--shadow-md);
+  transform: translateY(calc(-50% - 1px));
+}
+
+.control:active {
+  transform: translateY(-50%);
+}
+
+.control-prev { left: calc(var(--peek-mobile) + 4px); }
+.control-next { right: calc(var(--peek-mobile) + 4px); }
+
+/* Indicators */
+.carousel-indicators {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(17,24,39,0.25);
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.indicator:hover {
+  transform: scale(1.1);
+}
+
+.indicator.is-active {
+  width: 20px;
+  background: var(--color-primary);
+}
+
+/* Tablet adjustments */
+@media (min-width: 640px) {
+  .carousel-viewport {
+    padding: 0 var(--peek-tablet);
+    height: var(--carousel-height-tablet);
+  }
+  .control-prev { left: calc(var(--peek-tablet) + 6px); }
+  .control-next { right: calc(var(--peek-tablet) + 6px); }
+}
+
+/* Desktop adjustments: full hero, arrows outside edges */
+@media (min-width: 1024px) {
+  .carousel {
+    padding: 24px 0 36px;
+  }
+  .carousel-viewport {
+    padding: 0; /* no peek padding; hero look */
+    height: var(--carousel-height-desktop);
+    margin: 0 24px;
+  }
+  .carousel-track {
+    /* Keep smooth transitions on desktop */
+  }
+  .carousel-slide {
+    padding: 0 10px;
+  }
+  .control {
+    height: 44px;
+    width: 44px;
+    background: rgba(255,255,255,0.92);
+  }
+  .control-prev { left: -4px; }
+  .control-next { right: -4px; }
+}
